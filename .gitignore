@@ -1,0 +1,7 @@
+/target/
+/project/target/
+/project/project/
+/.idea/
+/.env
+/.keystore.jks
+/.truststore.jks
