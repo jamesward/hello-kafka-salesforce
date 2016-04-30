@@ -5,13 +5,12 @@ import org.apache.kafka.clients.producer.ProducerRecord
 import org.cometd.bayeux.Message
 import org.slf4j.LoggerFactory
 
-import scala.io.StdIn
-
 object SalesforceToKafka extends App {
 
   val logger = LoggerFactory.getLogger(getClass)
 
   implicit val actorSystem = ActorSystem()
+
   Salesforce.withSource("ContactUpdates") { salesforceSource =>
     Kafka.sink[String]("ContactUpdates").map { kafkaSink =>
       implicit val materializer = ActorMaterializer()(actorSystem)
@@ -23,9 +22,9 @@ object SalesforceToKafka extends App {
 
       salesforceSource.map(messageToProducerRecord).to(kafkaSink).run()
 
-      logger.info("Listening for messages from Salesforce and forwarding them to Heroku Kafka.")
+      logger.info("Listening for messages from Salesforce and forwarding them to Heroku Kafka.  Hit CTRL-C to exit.")
 
-      StdIn.readLine()
+      while (!Thread.currentThread.isInterrupted) {}
     }
   } recover {
     case e: Exception => logger.error("Error", e)

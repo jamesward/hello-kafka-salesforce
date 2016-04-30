@@ -9,4 +9,6 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-simple" % "1.7.21"
 )
 
+cancelable in Global := true
+
 enablePlugins(JavaAppPackaging)
