@@ -8,30 +8,30 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
 1. [Signup for a Salesforce Developer Org](https://developer.salesforce.com/signup)
 1. In Salesforce, create a PushTopic using the Execute Anonymous Apex feature in the Developer Console:
 
-    PushTopic pushTopic = new PushTopic();
-    pushTopic.Name = 'ContactUpdates';
-    pushTopic.Query = 'SELECT Id, Name FROM Contact';
-    pushTopic.ApiVersion = 36.0;
-    pushTopic.NotifyForOperationCreate = true;
-    pushTopic.NotifyForOperationUpdate = true;
-    pushTopic.NotifyForOperationUndelete = true;
-    pushTopic.NotifyForOperationDelete = true;
-    pushTopic.NotifyForFields = 'Referenced';
-    insert pushTopic;
+        PushTopic pushTopic = new PushTopic();
+        pushTopic.Name = 'ContactUpdates';
+        pushTopic.Query = 'SELECT Id, Name FROM Contact';
+        pushTopic.ApiVersion = 36.0;
+        pushTopic.NotifyForOperationCreate = true;
+        pushTopic.NotifyForOperationUpdate = true;
+        pushTopic.NotifyForOperationUndelete = true;
+        pushTopic.NotifyForOperationDelete = true;
+        pushTopic.NotifyForFields = 'Referenced';
+        insert pushTopic;
 
 1. [Sign up for the Heroku Kafka preview](https://www.heroku.com/kafka)
 1. [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 1. Wait for Kafka to be provisioned:
 
-    heroku kafka:wait -a YOUR_APP
+        heroku kafka:wait -a YOUR_APP
 
 1. Add a new Kafka topic:
 
-    heroku kafka:create ContactUpdates -a YOUR_APP
+        heroku kafka:create ContactUpdates -a YOUR_APP
 
 1. Watch the Kafka log
 
-    heroku kafka:tail ContactUpdates -a YOUR_APP
+        heroku kafka:tail ContactUpdates -a YOUR_APP
 
 1. Make a change to a Contact in Salesforce and you should see the event in the Kafka log.
 
@@ -42,21 +42,21 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
 
 1. Clone the source:
 
-    git clone https://github.com/jamesward/hello-kafka-salesforce
+        git clone https://github.com/jamesward/hello-kafka-salesforce
 
 1. Setup a `.env` file with the necessary info:
 
-    heroku config -s > .env
-    echo "SALESFORCE_USERNAME=<YOUR SALESFORCE USERNAME>" >> .env
-    echo "SALESFORCE_PASSWORD=<YOUR SALESFORCE PASSWORD>" >> .env
-    set -o allexport
-    source .env
-    set +o allexport
+        heroku config -s > .env
+        echo "SALESFORCE_USERNAME=<YOUR SALESFORCE USERNAME>" >> .env
+        echo "SALESFORCE_PASSWORD=<YOUR SALESFORCE PASSWORD>" >> .env
+        set -o allexport
+        source .env
+        set +o allexport
 
 1. Setup the Kafka certs:
 
-    bin/setup_certs.sh
+        bin/setup_certs.sh
 
 1. Run the app:
 
-    ./activator ~run
+        ./activator ~run
