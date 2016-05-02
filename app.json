@@ -1,0 +1,29 @@
+{
+  "name": "hello-kafka-salesforce",
+  "keywords": [
+    "salesforce",
+    "kafka"
+  ],
+  "env": {
+    "TRUSTSTORE_PASSWORD": {
+      "generator": "secret"
+    },
+    "KEYSTORE_PASSWORD": {
+      "generator": "secret"
+    },
+    "SALESFORCE_USERNAME": {
+      "required": true
+    },
+    "SALESFORCE_PASSWORD": {
+      "required": true
+    }
+  },
+  "formation": {
+    "salesforcetokafka": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-kafka"
+  ]
+}
