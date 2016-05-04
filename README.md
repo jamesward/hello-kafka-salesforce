@@ -21,6 +21,10 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
 
 1. [Sign up for the Heroku Kafka preview](https://www.heroku.com/kafka)
 1. [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+1. Install the Kafka plugin into the Heroku CLI
+
+        heroku plugins:install heroku-kafka
+
 1. Wait for Kafka to be provisioned:
 
         heroku kafka:wait -a YOUR_APP
