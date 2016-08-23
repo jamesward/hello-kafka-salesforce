@@ -5,12 +5,6 @@
     "kafka"
   ],
   "env": {
-    "TRUSTSTORE_PASSWORD": {
-      "generator": "secret"
-    },
-    "KEYSTORE_PASSWORD": {
-      "generator": "secret"
-    },
     "SALESFORCE_USERNAME": {
       "required": true
     },
@@ -22,7 +16,5 @@
     "salesforcetokafka": {
       "quantity": 1
     }
-  },
-  "addons": [
-  ]
+  }
 }

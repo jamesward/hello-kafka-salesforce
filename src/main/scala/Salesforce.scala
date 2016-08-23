@@ -2,10 +2,6 @@ import akka.NotUsed
 import akka.actor.{ActorSystem, Props}
 import akka.stream.actor.ActorPublisher
 import akka.stream.scaladsl.Source
-
-import scala.annotation.tailrec
-import scala.util.{Failure, Success, Try}
-
 import com.sforce.soap.partner.PartnerConnection
 import com.sforce.ws.ConnectorConfig
 import org.cometd.bayeux.Message
@@ -16,6 +12,9 @@ import org.cometd.client.transport.LongPollingTransport
 import org.eclipse.jetty.client.HttpClient
 import org.eclipse.jetty.client.api.Request
 import org.eclipse.jetty.util.ssl.SslContextFactory
+
+import scala.annotation.tailrec
+import scala.util.{Failure, Success, Try}
 
 object Salesforce {
 

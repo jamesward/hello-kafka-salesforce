@@ -23,7 +23,7 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
 1. [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 1. Add the Heroku Kafka Addon to the app
 
-        heroku addons:add heroku-kafka - a YOUR_APP
+        heroku addons:add heroku-kafka --version 0.10 -a YOUR_APP
 
 1. Install the Kafka plugin into the Heroku CLI
 
@@ -35,7 +35,7 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
 
 1. Add a new Kafka topic:
 
-        heroku kafka:create ContactUpdates -a YOUR_APP
+        heroku kafka:create ContactUpdates --partitions 1 -a YOUR_APP
 
 1. Watch the Kafka log
 
@@ -60,10 +60,6 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
         set -o allexport
         source .env
         set +o allexport
-
-1. Setup the Kafka certs:
-
-        bin/setup_certs.sh
 
 1. Run the app:
 

@@ -1,1 +1,1 @@
-salesforcetokafka: bin/setup_certs.sh && target/universal/stage/bin/hello-kafka-salesforce
+salesforcetokafka: target/universal/stage/bin/hello-kafka-salesforce
