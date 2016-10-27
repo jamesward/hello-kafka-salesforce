@@ -54,7 +54,7 @@ object Kafka {
   }
 
   def sink[K](topic: String): Try[Sink[ProducerRecord[String, String], Future[Done]]] = {
-    producerSettings().map(Producer.plainSink)
+    producerSettings().map(Producer.plainSink(_))
   }
 
 }

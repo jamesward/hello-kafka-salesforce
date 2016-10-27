@@ -19,11 +19,10 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
         pushTopic.NotifyForFields = 'Referenced';
         insert pushTopic;
 
-1. [Sign up for the Heroku Kafka preview](https://www.heroku.com/kafka)
 1. [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 1. Add the Heroku Kafka Addon to the app
 
-        heroku addons:add heroku-kafka --version 0.10 -a YOUR_APP
+        heroku addons:add heroku-kafka -a YOUR_APP
 
 1. Install the Kafka plugin into the Heroku CLI
 
@@ -35,11 +34,11 @@ This simple app uses the Salesforce Streaming API to listen for events in Salesf
 
 1. Add a new Kafka topic:
 
-        heroku kafka:create ContactUpdates --partitions 1 -a YOUR_APP
+        heroku kafka:topics:create ContactUpdates --partitions 32 -a YOUR_APP
 
 1. Watch the Kafka log
 
-        heroku kafka:tail ContactUpdates -a YOUR_APP
+        heroku kafka:topics:tail ContactUpdates -a YOUR_APP
 
 1. Make a change to a Contact in Salesforce and you should see the event in the Kafka log.
 
