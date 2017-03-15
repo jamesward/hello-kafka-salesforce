@@ -24,19 +24,28 @@ object Salesforce {
   val readTimeout = 120 * 1000
 
   private def connectionInfo(): Try[(String, String)] = {
-    val maybeConnectionInfo = for {
-      username <- sys.env.get("SALESFORCE_USERNAME")
-      password <- sys.env.get("SALESFORCE_PASSWORD")
-      config = new ConnectorConfig() {
+    val configTry: Try[ConnectorConfig] = {
+      val maybeUsername = sys.env.get("SALESFORCE_USERNAME")
+      val maybePassword = sys.env.get("SALESFORCE_PASSWORD")
+
+      val usernameTry = maybeUsername.fold[Try[String]](Failure(new Error("You must specify the SALESFORCE_USERNAME env var")))(Success(_))
+      val passwordTry = maybePassword.fold[Try[String]](Failure[String](new Error("You must specify the SALESFORCE_PASSWORD env var")))(Success(_))
+
+      for {
+        username <- usernameTry
+        password <- passwordTry
+      } yield new ConnectorConfig() {
         setUsername(username)
         setPassword(password)
         setAuthEndpoint(authEndPoint)
       }
-      connection <- Try(new PartnerConnection(config)).toOption
-      instanceUrl <- config.getServiceEndpoint.split(servicesEndpointSuffix).headOption
-    } yield (config.getSessionId.stripLineEnd, instanceUrl)
+    }
 
-    maybeConnectionInfo.map(Success(_)).getOrElse(Failure(new Error("Could not make Salesforce connection")))
+    for {
+      config <- configTry
+      connection <- Try(new PartnerConnection(config))
+      instanceUrl <- config.getServiceEndpoint.split(servicesEndpointSuffix).headOption.fold[Try[String]](Failure(new Error("Could not parse the instance url")))(Success(_))
+    } yield (config.getSessionId.stripLineEnd, instanceUrl)
   }
 
 

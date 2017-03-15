@@ -27,7 +27,7 @@ object SalesforceToKafka extends App {
       while (!Thread.currentThread.isInterrupted) {}
     }
   } recover {
-    case e: Exception => logger.error("Error", e)
+    case e: Throwable => logger.error("Error", e)
   }
 
   actorSystem.terminate()
