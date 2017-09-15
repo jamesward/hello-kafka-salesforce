@@ -2,7 +2,7 @@ import akka.Done
 import akka.kafka.ProducerSettings
 import akka.kafka.scaladsl.Producer
 import akka.stream.scaladsl.Sink
-import com.github.jkutner.EnvKeyStore
+import com.heroku.sdk.EnvKeyStore
 import com.typesafe.config.ConfigFactory
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.config.SslConfigs
@@ -19,6 +19,8 @@ object Kafka {
 
   lazy val trustStore = envTrustStore.storeTemp()
   lazy val keyStore = envKeyStore.storeTemp()
+
+  lazy val prefix = sys.env.getOrElse("KAFKA_PREFIX", "")
 
   lazy val sslConfig = ConfigFactory.parseMap(
     Map(
@@ -53,7 +55,7 @@ object Kafka {
     }
   }
 
-  def sink[K](topic: String): Try[Sink[ProducerRecord[String, String], Future[Done]]] = {
+  def sink[K](): Try[Sink[ProducerRecord[String, String], Future[Done]]] = {
     producerSettings().map(Producer.plainSink(_))
   }
 
